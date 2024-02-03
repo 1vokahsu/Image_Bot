@@ -1,19 +1,20 @@
-from aiogram import Bot, F
+from aiogram import Bot, F, Router
 from aiogram.enums import ChatMemberStatus
 from aiogram.types import CallbackQuery, Message, FSInputFile, InlineKeyboardMarkup, PhotoSize, LabeledPrice, \
     PreCheckoutQuery
 from aiogram.types.message import ContentType
 from aiogram.filters import CommandStart, Command, StateFilter
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from Image_Bot.src.create_dp import dp
+# from create_dp import dp
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
-from Image_Bot.src.core.keyboards import kb
-from Image_Bot.src.core.config.config import config
-from Image_Bot.src.core.database.queries.orm import AsyncORM
-from Image_Bot.src.ai_model import ai_gen_photo, ai_swap_photo, watermark_text
+from core.keyboards import kb
+from core.config.config import config
+from core.database.queries.orm import AsyncORM
+from ai_model import ai_gen_photo, ai_swap_photo, watermark_text
 import os
 
+router: Router = Router()
 
 # Cоздаем класс, наследуемый от StatesGroup, для группы состояний нашей FSM
 class FSMFillForm(StatesGroup):
@@ -23,7 +24,7 @@ class FSMFillForm(StatesGroup):
     upload_photo = State()
 
 
-@dp.callback_query(F.data == "gen_repit")
+@router.callback_query(F.data == "gen_repit")
 async def process_start(callback: CallbackQuery, bot: Bot, state: FSMContext):
     print(f"Юзера {callback.from_user.id} нажал на кнопку \"сгенерировать снова\"")
     user_channel_status = await bot.get_chat_member(chat_id=-1001711057486, user_id=callback.from_user.id)
@@ -50,7 +51,7 @@ async def process_start(callback: CallbackQuery, bot: Bot, state: FSMContext):
         )
 
 
-@dp.message(Command("create_image"))
+@router.message(Command("create_image"))
 async def create_image(message: Message, bot: Bot, state: FSMContext):
     print(f"Юзер {message.from_user.id} нажал /create_image ")
     print(f"Добавляем юзера {message.from_user.id} в бд")
@@ -76,7 +77,7 @@ async def create_image(message: Message, bot: Bot, state: FSMContext):
         )
 
 
-@dp.message(CommandStart())
+@router.message(CommandStart())
 async def process_start_command(message: Message, bot: Bot, state: FSMContext):
     print(f"Юзер {message.from_user.id} нажал /start ")
     await message.answer(
@@ -110,7 +111,7 @@ async def process_start_command(message: Message, bot: Bot, state: FSMContext):
                                  reply_markup=kb.get_kb_fab_prices())
 
 
-@dp.callback_query(kb.ChoiceCallbackFactory.filter(F.choice == "age"))
+@router.callback_query(kb.ChoiceCallbackFactory.filter(F.choice == "age"))
 async def process_age(callback: CallbackQuery,
                       callback_data: kb.ChoiceCallbackFactory,
                       bot: Bot):
@@ -151,7 +152,7 @@ async def process_age(callback: CallbackQuery,
 
 # Этот хэндлер будет срабатывать, если отправлено фото
 # и переводить в состояние выбора образования
-@dp.message(StateFilter(FSMFillForm.upload_photo), F.photo[-1].as_('largest_photo'))
+@router.message(StateFilter(FSMFillForm.upload_photo), F.photo[-1].as_('largest_photo'))
 async def process_photo(message: Message,
                         state: FSMContext,
                         largest_photo: PhotoSize,
@@ -192,7 +193,7 @@ async def process_photo(message: Message,
 
 # Этот хэндлер будет срабатывать, если во время отправки фото
 # будет введено/отправлено что-то некорректное
-@dp.message(StateFilter(FSMFillForm.upload_photo))
+@router.message(StateFilter(FSMFillForm.upload_photo))
 async def warning_not_photo(message: Message):
     print(f"Ловим юзера {message.from_user.id} на невалидных данных")
     await message.answer(
@@ -202,7 +203,7 @@ async def warning_not_photo(message: Message):
 
 # Этот хэндлер будет срабатывать на апдейт типа CallbackQuery
 # с data 'man' или 'woman'
-@dp.callback_query(kb.ChoiceCallbackFactory.filter(F.choice == "sex"))
+@router.callback_query(kb.ChoiceCallbackFactory.filter(F.choice == "sex"))
 async def process_sex_buttons(callback: CallbackQuery,
                               callback_data: kb.ChoiceCallbackFactory,
                               bot: Bot):
@@ -237,7 +238,7 @@ async def process_sex_buttons(callback: CallbackQuery,
 
 # Этот хэндлер будет срабатывать на апдейт типа CallbackQuery
 # с data профессий
-@dp.callback_query(kb.ChoiceCallbackFactory.filter(F.choice == "prof"))
+@router.callback_query(kb.ChoiceCallbackFactory.filter(F.choice == "prof"))
 async def process_prof_buttons(callback: CallbackQuery,
                                callback_data: kb.ChoiceCallbackFactory,
                                bot: Bot,
@@ -337,21 +338,21 @@ async def process_prof_buttons(callback: CallbackQuery,
         )
 
 
-@dp.callback_query(F.data == "without_watermark")
+@router.callback_query(F.data == "without_watermark")
 async def process_without_watermark(callback: CallbackQuery):
     print(f"Вывод информации для приобритения генераций")
     await callback.message.answer(text="Можете приобрести генерации!",
                                   reply_markup=kb.get_kb_fab_prices())
 
 
-@dp.callback_query(F.data == "buy_repit")
+@router.callback_query(F.data == "buy_repit")
 async def process_without_watermark(callback: CallbackQuery):
     print(f"Вывод информации для приобритения генераций")
     await callback.message.answer(text="Можете приобрести генерации!",
                                   reply_markup=kb.get_kb_fab_prices())
 
 
-@dp.callback_query(kb.PaymentCallbackFactory.filter(F.choice == "payment"))
+@router.callback_query(kb.PaymentCallbackFactory.filter(F.choice == "payment"))
 async def confirm(callback: CallbackQuery, callback_data: kb.PaymentCallbackFactory):
     builder = InlineKeyboardBuilder()
     builder.button(
@@ -369,7 +370,7 @@ async def confirm(callback: CallbackQuery, callback_data: kb.PaymentCallbackFact
     )
 
 
-@dp.callback_query(kb.PaymentCallbackFactory.filter(F.choice == "confirm"))
+@router.callback_query(kb.PaymentCallbackFactory.filter(F.choice == "confirm"))
 async def order(callback: CallbackQuery, callback_data: kb.PaymentCallbackFactory, bot: Bot):
     print(f"Вывод информации для оплаты генераций")
     await callback.message.edit_text("Отличный выбор!\n"
@@ -404,12 +405,12 @@ async def order(callback: CallbackQuery, callback_data: kb.PaymentCallbackFactor
     )
 
 
-@dp.pre_checkout_query()
+@router.pre_checkout_query()
 async def checkout_query(pre_checkout_query: PreCheckoutQuery, bot: Bot):
     await bot.answer_pre_checkout_query(pre_checkout_query.id, ok=True)
 
 
-@dp.message(F.content_type == ContentType.SUCCESSFUL_PAYMENT)
+@router.message(F.content_type == ContentType.SUCCESSFUL_PAYMENT)
 async def successful_payment(message: Message, state: FSMContext, bot: Bot):
     print(f"Оплата прошла успешно")
     print(f"Устанвливаем у юзера {message.from_user.id} флаг оплачено")
@@ -446,7 +447,7 @@ async def successful_payment(message: Message, state: FSMContext, bot: Bot):
                                  reply_markup=kb.get_kb_fab_prices())
 
 
-@dp.message(Command(commands='help'))
+@router.message(Command(commands='help'))
 async def process_help_command(message: Message, state: FSMContext, bot: Bot):
     print(f"Юзер {message.from_user.id} нажал /help ")
     await message.answer(

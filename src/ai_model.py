@@ -15,7 +15,7 @@ async def tob64(img):
 
 async def toimg(filename):
     with open(filename, "rb") as file:
-        return tob64(file.read())
+        return await tob64(file.read())
 
 
 async def ai_swap_photo(user_id: str, image: str, target: str) -> bool:

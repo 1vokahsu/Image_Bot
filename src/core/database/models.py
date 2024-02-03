@@ -1,7 +1,7 @@
 import sqlalchemy as sa
 from sqlalchemy.orm import mapped_column, Mapped
 
-from Image_Bot.src.core.database.database import Base
+from core.database.database import Base
 from typing import Annotated, Optional
 
 intpk = Annotated[int, mapped_column(primary_key=True)]

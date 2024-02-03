@@ -1,7 +1,7 @@
 from sqlalchemy import text
 from sqlalchemy import select
-from Image_Bot.src.core.database.database import async_engine, Base, async_session_factory
-from Image_Bot.src.core.database.models import UsersORM
+from core.database.database import async_engine, Base, async_session_factory
+from core.database.models import UsersORM
 
 
 class AsyncORM:
