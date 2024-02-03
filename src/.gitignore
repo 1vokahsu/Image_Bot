@@ -46,6 +46,7 @@ docs/_build/
 
 # virtualenv
 .venv
+.env
 venv/
 ENV/
 
