@@ -138,9 +138,6 @@ def get_kb_fab_prof():
         text="Пожарный", callback_data=ChoiceCallbackFactory(choice="prof", value="Firefighter")
     )
     builder.button(
-        text="Учитель", callback_data=ChoiceCallbackFactory(choice="prof", value='Teacher')
-    )
-    builder.button(
         text="Врач", callback_data=ChoiceCallbackFactory(choice="prof", value="Doctor")
     )
     builder.button(
