@@ -33,40 +33,6 @@
         "base64": false
     }
   },
-    "Teacher": {
-    "man": {
-        "prompt": "cinematic film still, 4k, realistic, ((cinematic photo:1.3)) of a white-skinned European man teacher wearing a gray costume, sitting in the classroom in school, Fujifilm XT3, long shot, ((hight light:1.4)), ((looking straight at the camera:1.3)), upper body shot, somber, shallow depth of field, vignette, highly detailed, high budget Hollywood movie, bokeh, cinemascope, moody, epic, gorgeous, film grain, grainy",
-        "negative_prompt": "ugly, tiling, poorly drawn hands, beard, stubble, poorly drawn feet, poorly drawn face, out of frame, extra limbs, disfigured, deformed, body out of frame, blurry, bad anatomy, blurred, watermark, grainy, signature, cut off, draft",
-        "style": "base",
-        "samples": 1,
-        "scheduler": "UniPC",
-        "num_inference_steps": 25,
-        "guidance_scale": 8,
-        "strength": 0.2,
-        "high_noise_fraction": 0.8,
-        "seed": 468685,
-        "img_width": 1024,
-        "img_height": 1024,
-        "refiner": true,
-        "base64": false
-    },
-    "woman": {
-        "prompt": "cinematic film still, 4k, realistic, ((cinematic photo:1.3)) of a white-skinned European woman teacher wearing a gray costume, sitting in the classroom in school, Fujifilm XT3, long shot, ((hight light:1.4)), ((looking straight at the camera:1.3)), upper body shot, somber, shallow depth of field, vignette, highly detailed, high budget Hollywood movie, bokeh, cinemascope, moody, epic, gorgeous, film grain, grainy",
-        "negative_prompt": "ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, extra limbs, disfigured, deformed, body out of frame, blurry, bad anatomy, blurred, watermark, grainy, signature, cut off, draft",
-        "style": "base",
-        "samples": 1,
-        "scheduler": "UniPC",
-        "num_inference_steps": 25,
-        "guidance_scale": 8,
-        "strength": 0.2,
-        "high_noise_fraction": 0.8,
-        "seed": 468685,
-        "img_width": 1024,
-        "img_height": 1024,
-        "refiner": true,
-        "base64": false
-    }
-  },
     "Doctor": {
     "man": {
         "prompt": "cinematic film still, 4k, realistic, ((cinematic photo:1.3)) of a white-skinned European man doctor wearing doctor's coat, sitting at the desk in a medical ward, Fujifilm XT3, long shot, ((hight light:1.4)), ((looking straight at the camera:1.3)), upper body shot, somber, shallow depth of field, vignette, highly detailed, high budget Hollywood movie, bokeh, cinemascope, moody, epic, gorgeous, film grain, grainy",

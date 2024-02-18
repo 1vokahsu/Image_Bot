@@ -415,12 +415,12 @@ async def successful_payment(message: Message, state: FSMContext, bot: Bot):
     print(f"Оплата прошла успешно")
     print(f"Устанвливаем у юзера {message.from_user.id} флаг оплачено")
     await AsyncORM.update_rate(message.chat.id, True)
-    if message.successful_payment.total_amount == 9900:
+    if message.successful_payment.total_amount == 6900:
         gens = 5
-    elif message.successful_payment.total_amount == 19900:
-        gens = 12
+    elif message.successful_payment.total_amount == 9900:
+        gens = 10
     else:
-        gens = 20
+        gens = 15
     print(f"Добавляем юзеру {message.from_user.id} +{gens} генераций")
     await AsyncORM.add_gens(message.from_user.id, gens)
     await message.answer("Спасибо за оплату! С Вашего счёта было списано "

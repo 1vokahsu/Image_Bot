@@ -14,19 +14,19 @@ class PaymentCallbackFactory(CallbackData, prefix="pay"):
 def get_kb_fab_prices():
     builder = InlineKeyboardBuilder()
     builder.button(
-        text="5 генераций-99 руб", callback_data=PaymentCallbackFactory(choice="payment",
+        text="5 генераций-69 руб", callback_data=PaymentCallbackFactory(choice="payment",
                                                                          value_gen="5",
-                                                                         value_price="99")
+                                                                         value_price="69")
     )
     builder.button(
-        text="12 генераций-199 руб", callback_data=PaymentCallbackFactory(choice="payment",
-                                                                          value_gen='12',
-                                                                          value_price="199")
+        text="10 генераций-99 руб", callback_data=PaymentCallbackFactory(choice="payment",
+                                                                          value_gen='10',
+                                                                          value_price="99")
     )
     builder.button(
-        text="20 генераций-299 руб", callback_data=PaymentCallbackFactory(choice="payment",
-                                                                          value_gen='20',
-                                                                          value_price="299")
+        text="15 генераций-129 руб", callback_data=PaymentCallbackFactory(choice="payment",
+                                                                          value_gen='15',
+                                                                          value_price="129")
     )
     # Выравниваем кнопки по 1 в ряд
     builder.adjust(1)
@@ -69,9 +69,6 @@ def get_kb_fab_prof_m():
     builder = InlineKeyboardBuilder()
     builder.button(
         text="Пожарный", callback_data=ChoiceCallbackFactory(choice="prof", value="Firefighter")
-    )
-    builder.button(
-        text="Учитель", callback_data=ChoiceCallbackFactory(choice="prof", value='Teacher')
     )
     builder.button(
         text="Врач", callback_data=ChoiceCallbackFactory(choice="prof", value="Doctor")
