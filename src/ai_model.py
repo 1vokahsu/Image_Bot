@@ -66,7 +66,8 @@ async def watermark_text(input_image_path: str,
             r, g, b, a = icon.getpixel((x, y))
             icon_with_alpha.putpixel((x, y), (r, g, b, a))
 
-    font = ImageFont.truetype("/System/Library/Fonts/Supplemental/Times New Roman Bold Italic.ttf", 60)
+    # font = ImageFont.truetype("/System/Library/Fonts/Supplemental/Times New Roman Bold Italic.ttf", 60)
+    font = ImageFont.truetype("/usr/share/fonts/ofont.ru_Times New Roman.ttf", 60)
 
     icon_width, icon_height = icon_with_alpha.size
 
