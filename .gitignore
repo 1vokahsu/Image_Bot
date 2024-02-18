@@ -67,3 +67,6 @@ docs/html
 
 #DS_Store
 .DS_Store
+
+#other
+main_1.py
